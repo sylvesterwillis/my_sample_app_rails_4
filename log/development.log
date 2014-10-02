@@ -1,0 +1,218 @@
+  [1m[36m (0.9ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20130311191400)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "email" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20130311191400"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+Migrating to AddIndexToUsersEmail (20130311194153)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20130311194153"]]
+  [1m[36m (0.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddPasswordDigestToUsers (20130311201841)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.7ms)[0m  [1mALTER TABLE "users" ADD "password_digest" varchar(255)[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20130311201841"]]
+  [1m[36m (0.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddRememberTokenToUsers (20130314184954)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "remember_token" varchar(255)[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_users_on_remember_token" ON "users" ("remember_token")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20130314184954"]]
+  [1m[35m (0.6ms)[0m  commit transaction
+Migrating to AddAdminToUsers (20130315015932)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "admin" boolean
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20130315015932"]]
+  [1m[35m (0.6ms)[0m  commit transaction
+Migrating to CreateMicroposts (20130315175534)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "microposts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" varchar(255), "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_microposts_on_user_id_and_created_at" ON "microposts" ("user_id", "created_at")[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20130315175534"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+Migrating to CreateRelationships (20130315230445)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "relationships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "follower_id" integer, "followed_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_relationships_on_follower_id" ON "relationships" ("follower_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_relationships_on_followed_id" ON "relationships" ("followed_id")[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_relationships_on_follower_id_and_followed_id" ON "relationships" ("follower_id", "followed_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20130315230445"]]
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started GET "/" for 127.0.0.1 at 2014-09-30 17:07:44 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by StaticPagesController#home as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1[0m
+  Rendered static_pages/home.html.erb within layouts/application (2.5ms)
+Warning. Error encountered while saving cache 0e1f922354abba1fbb8471689bee8deba72e35ef/custom.css.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 0f2b149321b60cd26e9eadbaa01e903109996b64/bootstrap.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/bootstrap.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_variables.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_mixins.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_reset.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_scaffolding.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_grid.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_layouts.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_type.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_code.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_forms.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_tables.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_sprites.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_dropdowns.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_wells.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_component-animations.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_close.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_buttons.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_button-groups.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_alerts.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_navs.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_navbar.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_breadcrumbs.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_pagination.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_pager.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_modals.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_tooltip.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_popovers.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_thumbnails.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_media.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_labels-badges.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_progress-bars.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_accordion.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_carousel.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_hero-unit.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 1eaa8643f23fbe1de266a4869766a5931241921a/_utilities.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 0e1f922354abba1fbb8471689bee8deba72e35ef/sessions.css.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 0e1f922354abba1fbb8471689bee8deba72e35ef/static_pages.css.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+Warning. Error encountered while saving cache 0e1f922354abba1fbb8471689bee8deba72e35ef/users.css.scssc: can't dump anonymous class #<Class:0x007fc997a51708>
+
+  Rendered layouts/_shim.html.erb (0.3ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+  Rendered layouts/_header.html.erb (1.6ms)
+  Rendered layouts/_footer.html.erb (0.4ms)
+Completed 200 OK in 2359ms (Views: 2320.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/sessions.css?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/custom.css?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/static_pages.css?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-transition.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-alert.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-affix.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-carousel.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-button.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-collapse.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-dropdown.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-modal.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-scrollspy.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-tab.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-tooltip.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-typeahead.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap-popover.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/static_pages.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
+
+
+Started GET "/assets/rails.png" for 127.0.0.1 at 2014-09-30 17:07:46 -0400
